@@ -87,15 +87,11 @@ function Cart() {
                         }).format(product.price * productAmount)}
                       </h1>
                       <div className="flex  items-center gap-1">
-                        <button onClick={() => setAmount("increase")
-                      }
-                      
-                      >+</button>
+                        <button onClick={() => setAmount("increase")}>+</button>
                         <h3 className="w-4">{productAmount}</h3>
                         <button
                           onClick={() => setAmount("decrease")}
                           disabled={productAmount == 1 ? true : false}
-
                         >
                           -
                         </button>
