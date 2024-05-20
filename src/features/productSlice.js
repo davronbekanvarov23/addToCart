@@ -1,14 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  products: [],
-  amount: 0,
-  price: 0,
+const dataFromLocalStorage = () => {
+  return (
+    JSON.parse(localStorage.getItem("products")) || {
+      products: [],
+      amount: 0,
+      price: 0,
+    }
+  );
 };
 
 const productsSlice = createSlice({
   name: "products",
-  initialState,
+  initialState: dataFromLocalStorage(),
   reducers: {
     addProduct: (state, { payload }) => {
       const item = state.products.find((product) => product.id == payload.id);
@@ -18,10 +22,17 @@ const productsSlice = createSlice({
       } else {
         state.products.push(payload);
       }
-     productsSlice.caseReducers.calculateTotal(state)
+      productsSlice.caseReducers.calculateTotal(state);
+      
     },
 
-    removeProduct: (state, { payload }) => {},
+    removeProduct: (state, { payload }) => {
+      state.products = state.products.filter((item) => {
+        return item.id != payload;
+      });
+      localStorage.setItem("products", JSON.stringify(state));
+
+    },
     calculateTotal: (state) => {
       let price = 0;
       let amount = 0;
@@ -33,6 +44,7 @@ const productsSlice = createSlice({
 
       state.amount = amount;
       state.price = price;
+      localStorage.setItem("products", JSON.stringify(state));
     },
   },
 });
