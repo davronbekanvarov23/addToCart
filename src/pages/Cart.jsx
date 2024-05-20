@@ -7,15 +7,6 @@ import { useState } from "react";
 function Cart() {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  const [productAmount, setProductAmount] = useState(1);
-
-  const setAmount = (type) => {
-    if (type == "decrease") {
-      setProductAmount((prev) => prev - 1);
-    } else if (type == "increase") {
-      setProductAmount((prev) => prev + 1);
-    }
-  };
 
   if (products.length == 0) {
     return (
@@ -52,8 +43,19 @@ function Cart() {
           </thead>
           <tbody>
             {products.map((product) => {
+              const [productAmount, setProductAmount] = useState(
+                product.amount
+              );
+
+              const setAmount = (type) => {
+                if (type == "decrease") {
+                  setProductAmount((prev) => prev - 1);
+                } else if (type == "increase") {
+                  setProductAmount((prev) => prev + 1);
+                }
+              }
               return (
-                <tr>
+                <tr key={product.id}>
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />

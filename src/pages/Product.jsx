@@ -49,7 +49,7 @@ function Product() {
 
         <div className="  flex items-start justify-center flex-col w-full gap-2">
           <div className="flex  items-center gap-2">
-            <h className=" text-xl font-medium ">Amount:</h>{" "}
+            <h1 className=" text-xl font-medium ">Amount:</h1>{" "}
             <button
               onClick={() => setAmount("increase")}
               className="btn btn-secondary"
