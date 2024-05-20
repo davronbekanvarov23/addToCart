@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils/index";
 import { useState } from "react";
 
@@ -14,6 +14,7 @@ export const loader = async ({ params }) => {
 function Product() {
   const dispatch = useDispatch();
   const { product } = useLoaderData();
+
   const [productAmount, setProductAmount] = useState(1);
 
   const setAmount = (type) => {
@@ -34,9 +35,9 @@ function Product() {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto flex flex-col items-start">
-        <h1 className=" text-3xl  font-bold ">{product.title}</h1>
-        <div className="carousel carousel-center max-w-4xl w-full p-4 space-x-4 bg-neutral rounded-box">
+      <div className="max-w-6xl mx-auto flex flex-col items-start py-5 gap-5">
+        <h1 className=" text-3xl  font-bold mb-5 ">{product.title}</h1>
+        <div className="carousel carousel-center max-w-4xl w-full p-4 space-x-4 bg-neutral rounded-box ">
           {product.images.map((image) => {
             return (
               <div key={image} className=" carousel-item">
@@ -45,26 +46,41 @@ function Product() {
             );
           })}
         </div>
-        <div className=" flex items-center gap-2">
-          <button
-            onClick={() => setAmount("increase")}
-            className="btn btn-secondary"
-          >
-            +
-          </button>
-          <h3>{productAmount}</h3>
-          <button
-            onClick={() => setAmount("decrease")}
-            className="btn btn-secondary"
-            disabled={productAmount == 1 ? true : false}
-          >
-            -
-          </button>
 
-          <hr />
+        <div className="  flex items-start justify-center flex-col w-full gap-2">
+          <div className="flex  items-center gap-2">
+            <h className=" text-xl font-medium ">Amount:</h>{" "}
+            <button
+              onClick={() => setAmount("increase")}
+              className="btn btn-secondary"
+            >
+              +
+            </button>
+            <h3 className="w-4">{productAmount}</h3>
+            <button
+              onClick={() => setAmount("decrease")}
+              className="btn btn-secondary"
+              disabled={productAmount == 1 ? true : false}
+            >
+              -
+            </button>
+          </div>
 
-          <button onClick={addToBag} className="btn btn-primary">Add to Bag</button>
+          <h1 className=" text-xl ">
+            Price:{" "}
+            {new Intl.NumberFormat("us-US", {
+              currency: "USD",
+              style: "currency",
+            }).format(product.price * productAmount)}
+          </h1>
+          <button onClick={addToBag} className="btn btn-primary ">
+            Add to Bag
+          </button>
         </div>
+
+        <Link className="btn btn-ghost " to="/">
+          Back
+        </Link>
       </div>
     </>
   );

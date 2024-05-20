@@ -23,14 +23,13 @@ const productsSlice = createSlice({
         state.products.push(payload);
       }
       productsSlice.caseReducers.calculateTotal(state);
-      
     },
 
     removeProduct: (state, { payload }) => {
       state.products = state.products.filter((item) => {
         return item.id != payload;
       });
-      localStorage.setItem("products", JSON.stringify(state));
+      productsSlice.caseReducers.calculateTotal(state);
 
     },
     calculateTotal: (state) => {
