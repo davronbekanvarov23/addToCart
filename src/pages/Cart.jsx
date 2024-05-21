@@ -36,8 +36,9 @@ function Cart() {
                 </label>
               </th>
               <th>Name/type</th>
+              <th>Price</th>
               <th>Description</th>
-              <th> Price</th>
+              <th>Total Price</th>
               <th></th>
             </tr>
           </thead>
@@ -64,6 +65,14 @@ function Cart() {
                         </div>
                       </div>
                     </div>
+                  </td>
+                  <td>
+                    <h1 className=" text-xl ">
+                      {new Intl.NumberFormat("us-US", {
+                        currency: "USD",
+                        style: "currency",
+                      }).format(product.price)}
+                    </h1>
                   </td>
                   <td>
                     <br />
@@ -93,10 +102,10 @@ function Cart() {
           <tfoot>
             <tr>
               <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Total price</th>
               <th></th>
+              <th> </th>
+              <th> </th>
             </tr>
           </tfoot>
         </table>
