@@ -30,7 +30,17 @@ const productsSlice = createSlice({
         return item.id != payload;
       });
       productsSlice.caseReducers.calculateTotal(state);
+    },
 
+    changeAmount: (state, { payload }) => {
+      const item = state.products.find((item) => item.id == payload.id);
+
+      if (payload.type == "increment") {
+        item.amount += 1;
+      } else {
+        item.amount -= 1;
+      }
+      productsSlice.caseReducers.calculateTotal(state);
     },
     calculateTotal: (state) => {
       let price = 0;
@@ -48,6 +58,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addProduct, removeProduct } = productsSlice.actions;
+export const { addProduct, removeProduct, changeAmount } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;

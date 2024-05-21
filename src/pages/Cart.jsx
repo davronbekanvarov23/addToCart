@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { removeProduct } from "../features/productSlice";
+import { removeProduct, changeAmount } from "../features/productSlice";
 import { Link } from "react-router-dom";
 
 function Cart() {
@@ -38,6 +38,7 @@ function Cart() {
               <th>Name/type</th>
               <th>Price</th>
               <th>Description</th>
+              <th>Amount</th>
               <th>Total Price</th>
               <th></th>
             </tr>
@@ -79,6 +80,42 @@ function Cart() {
                     <span>{product.description.substring(0, 150)}...</span>
                   </td>
                   <td>
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        onClick={() =>
+                          dispatch(
+                            changeAmount({
+                              type: "increment",
+                              id: product.id,
+                            })
+                          )
+                        }
+                        className="btn-sm"
+                      >
+                        +
+                      </button>
+                      <h3>{product.amount}</h3>
+                      <button
+                        onClick={() => {
+                          if (product.amount == 1) {
+                            dispatch(removeProduct(product.id));
+                          } else {
+                            dispatch(
+                              changeAmount({
+                                type: "decriment",
+                                id: product.id,
+                              })
+                            );
+                          }
+                        }}
+                        disabled={product.amount == 0 ? true : false}
+                        className="btn-sm"
+                      >
+                        -
+                      </button>
+                    </div>
+                  </td>
+                  <td>
                     <h1 className=" text-xl ">
                       {new Intl.NumberFormat("us-US", {
                         currency: "USD",
@@ -86,6 +123,7 @@ function Cart() {
                       }).format(product.price * product.amount)}
                     </h1>
                   </td>
+
                   <th>
                     <button
                       onClick={() => dispatch(removeProduct(product.id))}
